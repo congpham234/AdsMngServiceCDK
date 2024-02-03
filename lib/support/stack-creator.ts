@@ -12,11 +12,15 @@ export interface CreateStacksResponse {
 export const createStacks = (app: App): CreateStacksResponse => {
   const stackPrefix = 'alpha-NA-us-west-2';
 
-  const vpcStack = new VpcStack(app, `${stackPrefix}-DeliveryServiceVpcStack`, {});
+  const vpcStack = new VpcStack(
+    app,
+    `${stackPrefix}-DeliveryServiceVpcStack`,
+    {},
+  );
 
   return {
     stacks: {
-      vpcStack
-    }
-  }
-}
+      vpcStack,
+    },
+  };
+};
