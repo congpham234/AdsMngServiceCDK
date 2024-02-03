@@ -23,7 +23,10 @@ jobs:
 
     - name: Build
       run: npm run build
-    
+
+    - name: Install AWS CDK CLI
+      run: npm install -g aws-cdk
+
     - name: Deploy CDK stack
       run: cdk synth && cdk deploy --require-approval never "*"
       env:
