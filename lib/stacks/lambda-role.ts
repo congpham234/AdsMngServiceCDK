@@ -1,10 +1,9 @@
-import { App, Stack, StackProps } from "aws-cdk-lib";
-import { IRole, ManagedPolicy, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
-import { Construct } from "constructs";
+import { Stack, StackProps } from 'aws-cdk-lib';
+import { IRole, ManagedPolicy, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
+import { Construct } from 'constructs';
 
 
-export interface ServiceRoleStackProps extends StackProps {
-}
+export type ServiceRoleStackProps = StackProps
 
 export class ServiceRoleStack extends Stack {
   public readonly serviceRole: IRole;
@@ -17,8 +16,8 @@ export class ServiceRoleStack extends Stack {
       assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
       managedPolicies: [
         ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaVPCAccessExecutionRole'),
-        ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole')
-      ]
+        ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'),
+      ],
     });
   }
 }

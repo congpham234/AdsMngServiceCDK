@@ -43,7 +43,8 @@
             {
               "src/**/": "CAMEL_CASE"
             }
-          ]
+          ],
+          "max-len": "off"
         }
       }
     ],

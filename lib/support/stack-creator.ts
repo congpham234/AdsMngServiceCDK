@@ -1,5 +1,4 @@
 import { App } from 'aws-cdk-lib';
-import { VpcStack } from '../stacks/vpc-stack';
 import { LambdaStack } from '../stacks/lambda-stack';
 import { ServiceRoleStack } from '../stacks/lambda-role';
 
@@ -25,14 +24,14 @@ export const createStacks = (app: App): CreateStacksResponse => {
   const serviceRoleStack = new ServiceRoleStack(app, `${stackPrefix}-ServiceRoleStack`, {});
 
   const lambdaStack = new LambdaStack(app, `${stackPrefix}-LambdaStack`, {
-    serviceRole: serviceRoleStack.serviceRole
+    serviceRole: serviceRoleStack.serviceRole,
   });
 
   return {
     stacks: {
       // vpcStack,
       serviceRoleStack,
-      lambdaStack
+      lambdaStack,
     },
   };
 };
