@@ -8,7 +8,6 @@ export class VpcStack extends Stack {
     super(scope, id, props);
     this.vpc = new Vpc(this, 'DeliveryServiceVpc', {
       natGateways: 0,
-      cidr: '10.0.0.0/16',
     });
   }
 }
