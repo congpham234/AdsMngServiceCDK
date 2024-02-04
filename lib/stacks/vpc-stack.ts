@@ -7,6 +7,7 @@ export class VpcStack extends Stack {
   public constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     this.vpc = new Vpc(this, 'DeliveryServiceVpc', {
+      natGateways: 0,
       cidr: '10.0.0.0/16',
     });
   }
