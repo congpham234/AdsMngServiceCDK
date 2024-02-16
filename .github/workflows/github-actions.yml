@@ -20,8 +20,9 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '18'
-        - name: Install dependencies
-        run: npm install
+
+    - name: Install dependencies
+      run: npm install
 
     - name: Build Code
       run: npm run build
@@ -37,6 +38,20 @@ jobs:
 
     - name: Push Docker Image to ECR
       run: docker push 730335480908.dkr.ecr.us-west-2.amazonaws.com/delivery-service-ecr-repo:latest
+
+    - name: Send Discord notification
+      uses: sarisia/actions-status-discord@v1
+      if: always()
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        status: ${{ job.status }}
+        title: "Deploy Delivery Service AWS Infrastructure"
+        description: "Build and deploy AWS Infrastructure for Delivery Service CDK"
+        image: ${{ secrets.EMBED_IMAGE }}
+        color: 0x6AA84F
+        url: "https://github.com/congpham234/DeliveryServiceCDK"
+        username: Kilala
+        avatar_url: ${{ secrets.EMBED_IMAGE }}
 
   build-and-deploy-cdk:
     runs-on: ubuntu-latest
