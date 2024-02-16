@@ -89,6 +89,7 @@ jobs:
   send-discord-notification:
     runs-on: ubuntu-latest
     needs: [build-and-deploy-code, build-and-deploy-cdk]
+    if: always()
     steps:
       - name: Send Discord notification
         uses: sarisia/actions-status-discord@v1
