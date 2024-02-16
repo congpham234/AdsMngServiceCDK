@@ -6,11 +6,25 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy-code:
+    runs-on: ubuntu-latest
+    
+    - name: Checkout DeliveryService Repo repository
+      uses: actions/checkout@v2
+      with:
+        repository: congpham234/DeliveryService
+        ref: main
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+  build-and-deploy-cdk:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout DeliveryServiceCDK Repo repository
       uses: actions/checkout@v2
 
     - name: Set up Node.js
