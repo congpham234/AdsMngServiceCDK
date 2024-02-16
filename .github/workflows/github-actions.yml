@@ -9,6 +9,7 @@ jobs:
   build-and-deploy-code:
     runs-on: ubuntu-latest
     
+    steps:
     - name: Checkout DeliveryService Repo repository
       uses: actions/checkout@v2
       with:
