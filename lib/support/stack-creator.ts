@@ -1,6 +1,6 @@
 import { App } from 'aws-cdk-lib';
 import { LambdaStack } from '../stacks/lambda-stack';
-import { ServiceRoleStack } from '../stacks/lambda-role';
+import { ServiceRoleStack } from '../stacks/lambda-role-stack';
 import { EcrStack } from '../stacks/ecr-stack';
 
 export interface Stacks {
@@ -17,6 +17,7 @@ export interface CreateStacksResponse {
 export const createStacks = (app: App): CreateStacksResponse => {
   const stackPrefix = 'alpha-NA-us-west-2-DeliveryService';
 
+  // Cost some unknown fucking money so i am commenting it out.
   // const vpcStack = new VpcStack(
   //   app,
   //   `${stackPrefix}-DeliveryServiceVpcStack`,
