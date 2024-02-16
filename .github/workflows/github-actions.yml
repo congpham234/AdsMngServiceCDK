@@ -59,6 +59,7 @@ jobs:
 
   build-and-deploy-cdk:
     runs-on: ubuntu-latest
+    needs: build-and-deploy-code
 
     steps:
     - name: Checkout DeliveryServiceCDK Repo repository
