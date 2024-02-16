@@ -1,7 +1,7 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { IRepository } from 'aws-cdk-lib/aws-ecr';
 import { IRole } from 'aws-cdk-lib/aws-iam';
-import { Code, DockerImageCode, Function, Handler, IFunction, Runtime } from 'aws-cdk-lib/aws-lambda';
+import { Code, Function, Handler, IFunction, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 
 
@@ -21,7 +21,7 @@ export class LambdaStack extends Stack {
     this.lambdaFunction = new Function(this, 'DeliveryServiceLambdaId', {
       runtime: Runtime.FROM_IMAGE,
       handler: Handler.FROM_IMAGE,
-      code: Code.fromEcrImage(props.ecrRepo),
+      code: Code.fromEcrImage(props.ecrRepo, { tag: 'latest' }),
       role: props.serviceRole,
       environment: {
         Stage: 'alpha',
