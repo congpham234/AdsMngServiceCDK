@@ -82,16 +82,17 @@ jobs:
       - name: Access client_payload data for commit message
         run: |
           if [ -z "${{ github.event.client_payload.COMMIT_MSG }}" ]; then
-            commit_message=${{ github.event.head_commit.message }}
+            export COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
           else
-            commit_message="${{ github.event.client_payload.COMMIT_MSG }}"
-
-      - name: Send Discord notification
+            export COMMIT_MESSAGE="${{ github.event.client_payload.COMMIT_MSG }}"
+          fi
+  
+      - name: Send Discord Notification
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: ${{ commit_message }}
+          title: ${{ env.COMMIT_MESSAGE }}
           image: ${{ secrets.EMBED_IMAGE }}
           color: 0x6AA84F
           url: "https://github.com/congpham234/DeliveryServiceCDK"
