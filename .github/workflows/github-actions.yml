@@ -82,7 +82,7 @@ jobs:
       - name: Access client_payload data for commit message
         run: |
           if [[ -z "${{ github.event.client_payload.COMMIT_MESSAGE }}" ]]; then
-            COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
+            COMMIT_MESSAGE="DeliveryServiceCDK - ${{ github.event.head_commit.message }}"
           else
             COMMIT_MESSAGE="${{ github.event.client_payload.COMMIT_MESSAGE }}"
           fi
