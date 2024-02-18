@@ -86,13 +86,14 @@ jobs:
           else
             export COMMIT_MESSAGE="${{ github.event.client_payload.COMMIT_MSG }}"
           fi
+            echo "Commit message: ${{ env.COMMIT_MESSAGE }}"
   
       - name: Send Discord Notification
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: ${{ env.COMMIT_MESSAGE }}
+          title: "${{ env.COMMIT_MESSAGE }}"
           image: ${{ secrets.EMBED_IMAGE }}
           color: 0x6AA84F
           url: "https://github.com/congpham234/DeliveryServiceCDK"
