@@ -79,13 +79,19 @@ jobs:
     needs: [build-and-deploy-code, build-and-deploy-cdk]
     if: always()
     steps:
+      - name: Access client_payload data for commit message
+        run: |
+          if [ -z "${{ github.event.client_payload.COMMIT_MSG }}" ]; then
+            key_value=${{ github.event.head_commit.message }}
+          else
+            key_value="${{ github.event.client_payload.COMMIT_MSG }}"
+
       - name: Send Discord notification
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: "Deploy Delivery Service AWS Infrastructure"
-          description: "Build and deploy AWS Infrastructure for Delivery Service CDK"
+          title: ${{ key_value }}
           image: ${{ secrets.EMBED_IMAGE }}
           color: 0x6AA84F
           url: "https://github.com/congpham234/DeliveryServiceCDK"
