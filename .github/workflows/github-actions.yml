@@ -86,7 +86,7 @@ jobs:
           else
             export COMMIT_MESSAGE="${{ github.event.client_payload.COMMIT_MESSAGE }}"
           fi
-          echo "Commit message: ${{ env.COMMIT_MESSAGE }}"
+          echo "Commit message: $COMMIT_MESSAGE"
   
       - name: Send Discord Notification
         uses: sarisia/actions-status-discord@v1
