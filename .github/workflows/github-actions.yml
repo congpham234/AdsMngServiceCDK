@@ -81,12 +81,12 @@ jobs:
     steps:
       - name: Access client_payload data for commit message
         run: |
-          if [ -z "${{ github.event.client_payload.COMMIT_MSG }}" ]; then
+          if [[ -z "${{ github.event.client_payload.COMMIT_MESSAGE }}" ]]; then
             export COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
           else
-            export COMMIT_MESSAGE="${{ github.event.client_payload.COMMIT_MSG }}"
+            export COMMIT_MESSAGE="${{ github.event.client_payload.COMMIT_MESSAGE }}"
           fi
-            echo "Commit message: ${{ env.COMMIT_MESSAGE }}"
+          echo "Commit message: ${{ env.COMMIT_MESSAGE }}"
   
       - name: Send Discord Notification
         uses: sarisia/actions-status-discord@v1
