@@ -9,7 +9,8 @@
     "watch": "tsc -w",
     "cdk": "cdk",
     "lint": "eslint .",
-    "format": "npm run lint -- --fix"
+    "format": "npm run lint -- --fix",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/node": "^20.11.14",
@@ -21,7 +22,8 @@
     "eslint-config-typescript": "^3.0.0",
     "eslint-plugin-check-file": "^2.6.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "husky": "^9.0.6"
   },
   "dependencies": {
     "aws-cdk-lib": "2.47.0",
