@@ -5,7 +5,7 @@
     "delivery_service_cdk": "bin/delivery_service_cdk.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run lint",
     "watch": "tsc -w",
     "cdk": "cdk",
     "lint": "eslint .",

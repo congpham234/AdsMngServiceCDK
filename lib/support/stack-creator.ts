@@ -2,12 +2,14 @@ import { App } from 'aws-cdk-lib';
 import { LambdaStack } from '../stacks/lambda-stack';
 import { ServiceRoleStack } from '../stacks/lambda-role';
 import { EcrStack } from '../stacks/ecr-stack';
+import { DynamodbStack } from '../stacks/dynamodb-stack';
 
 export interface Stacks {
   // vpcStack: VpcStack;
   serviceRoleStack: ServiceRoleStack;
   ecrRepoStack: EcrStack;
   lambdaStack: LambdaStack;
+  dynamoDbStack: DynamodbStack;
 }
 
 export interface CreateStacksResponse {
@@ -34,12 +36,17 @@ export const createStacks = (app: App): CreateStacksResponse => {
     ecrRepo: ecrRepoStack.ecrRepository,
   });
 
+  const dynamoDbStack = new DynamodbStack(app, `${stackPrefix}-DynamoDbStack`, {
+    serviceRole: serviceRoleStack.serviceRole,
+  });
+
   return {
     stacks: {
       // vpcStack,
       ecrRepoStack,
       serviceRoleStack,
       lambdaStack,
+      dynamoDbStack,
     },
   };
 };
