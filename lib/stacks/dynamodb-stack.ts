@@ -23,5 +23,6 @@ export class DynamodbStack extends Stack {
     });
 
     this.deliveryServiceDdb.grantReadWriteData(props.serviceRole);
+    this.exportValue(this.deliveryServiceDdb.tableArn);
   }
 }
