@@ -19,6 +19,7 @@ export class LambdaStack extends Stack {
 
     // Define Lambda function using ECR image as code
     this.lambdaFunction = new Function(this, 'DeliveryServiceLambdaId', {
+      functionName: 'DeliveryServiceLambda',
       runtime: Runtime.FROM_IMAGE,
       handler: Handler.FROM_IMAGE,
       code: Code.fromEcrImage(props.ecrRepo, { tag: 'latest' }),
