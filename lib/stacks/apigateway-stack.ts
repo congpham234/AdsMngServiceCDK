@@ -1,5 +1,5 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { ApiDefinition, IRestApi, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { ApiDefinition, IRestApi, LambdaIntegration, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { IFunction } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { join } from 'path';
@@ -19,6 +19,11 @@ export class ApiGatewayStack extends Stack {
       restApiName: 'DeliveryServApiGatewayName',
       description: 'Delivery Service Rest Api Gateway',
       apiDefinition: ApiDefinition.fromAsset(join(__dirname, '../../openapi-spec.json')),
+
+    });
+
+    this.restApi.root.addResource('v1', {
+      defaultIntegration: new LambdaIntegration(props.lambdaFunction),
     });
   }
 }
