@@ -18,7 +18,7 @@ export class ApiGatewayStack extends Stack {
     this.restApi = new SpecRestApi(this, 'DeliveryServApiGatewayId', {
       restApiName: 'DeliveryServApiGatewayName',
       description: 'Delivery Service Rest Api Gateway',
-      apiDefinition: ApiDefinition.fromAsset(join(__dirname, '.openapi-spec.json')),
+      apiDefinition: ApiDefinition.fromAsset(join(__dirname, '../../openapi-spec.json')),
     });
   }
 }
