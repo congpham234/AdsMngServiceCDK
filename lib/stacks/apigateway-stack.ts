@@ -22,6 +22,7 @@ export class ApiGatewayStack extends Stack {
     });
 
     this.restApi.root.addProxy({
+      anyMethod: true,
       defaultIntegration: new LambdaIntegration(props.lambdaFunction),
     });
   }
