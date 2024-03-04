@@ -19,10 +19,9 @@ export class ApiGatewayStack extends Stack {
       restApiName: 'DeliveryServApiGatewayName',
       description: 'Delivery Service Rest Api Gateway',
       apiDefinition: ApiDefinition.fromAsset(join(__dirname, '../../openapi-spec.json')),
-
     });
 
-    this.restApi.root.addResource('v1', {
+    this.restApi.root.addProxy({
       defaultIntegration: new LambdaIntegration(props.lambdaFunction),
     });
   }
