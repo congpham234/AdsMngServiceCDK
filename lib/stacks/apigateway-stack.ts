@@ -20,7 +20,5 @@ export class ApiGatewayStack extends Stack {
       restApiName: 'DeliveryServApiGatewayName',
       description: 'Delivery Service Rest Api Gateway',
     });
-
-    this.restApi.root.addResource('v1').addResource('delivery');
   }
 }
