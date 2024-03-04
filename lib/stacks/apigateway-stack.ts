@@ -1,8 +1,7 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { ApiDefinition, IRestApi, LambdaIntegration, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { IRestApi, LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { IFunction } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
-import { join } from 'path';
 
 
 export interface ApiGatewayStackProps extends StackProps {
@@ -15,15 +14,13 @@ export class ApiGatewayStack extends Stack {
 
   constructor(scope: Construct, id: string, props: ApiGatewayStackProps) {
     super(scope, id, props);
-    this.restApi = new SpecRestApi(this, 'DeliveryServApiGatewayId', {
+
+    this.restApi = new LambdaRestApi(this, 'DeliveryServApiGatewayId', {
+      handler: props.lambdaFunction,
       restApiName: 'DeliveryServApiGatewayName',
       description: 'Delivery Service Rest Api Gateway',
-      apiDefinition: ApiDefinition.fromAsset(join(__dirname, '../../openapi-spec.json')),
     });
 
-    this.restApi.root.addProxy({
-      anyMethod: true,
-      defaultIntegration: new LambdaIntegration(props.lambdaFunction),
-    });
+    this.restApi.root.addResource('v1').addResource('delivery');
   }
 }
