@@ -19,6 +19,8 @@ export class ServiceRoleStack extends Stack {
         ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'),
       ],
     });
+
+    throw new Error('test');
     // this.exportValue(this.serviceRole.roleArn);
   }
 }
