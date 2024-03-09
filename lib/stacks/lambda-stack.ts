@@ -22,7 +22,7 @@ export class LambdaStack extends Stack {
       functionName: 'DeliveryServiceLambda',
       runtime: Runtime.FROM_IMAGE,
       handler: Handler.FROM_IMAGE,
-      code: Code.fromEcrImage(props.ecrRepo, { tag: 'latest' }),
+      code: Code.fromEcrImage(props.ecrRepo, { tag: process.env.RUN_ID }),
       role: props.serviceRole,
       environment: {
         Stage: 'alpha',

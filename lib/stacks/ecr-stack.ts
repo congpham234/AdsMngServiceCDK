@@ -14,7 +14,6 @@ export class EcrStack extends Stack {
 
   constructor(scope: Construct, id: string, props: EcrStackProps) {
     super(scope, id, props);
-    // Create ECR repository
     this.ecrRepository = new Repository(this, 'DeliveryServiceEcrRepoId', {
       repositoryName: 'delivery-service-ecr-repo',
     });
