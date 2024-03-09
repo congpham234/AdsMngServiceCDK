@@ -12,6 +12,7 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: us-west-2
+  COMMIT_MESSAGE: ${{ github.event.client_payload.COMMIT_MESSAGE || github.event.head_commit.message }}
 
 concurrency:
   group: delivery-service-deployment-group
@@ -81,13 +82,17 @@ jobs:
     needs: [build-and-deploy-code, build-and-deploy-cdk]
     if: always()
     steps:
+      - name: Clean up commit message
+        id: COMMIT_MESSAGE_ID
+        uses: frabert/replace-string-action@v2
+        with:
+          pattern: '/"/g'
+          string: ${{ env.COMMIT_MESSAGE }}
+          replace-with: ''
+
       - name: Access client_payload data for commit message
         run: |
-          if [[ -z "${{ github.event.client_payload.COMMIT_MESSAGE }}" ]]; then
-            COMMIT_MESSAGE="DeliveryServiceCDK - ${{ github.event.head_commit.message }}"
-          else
-            COMMIT_MESSAGE="${{ github.event.client_payload.COMMIT_MESSAGE }}"
-          fi
+          COMMIT_MESSAGE=("${{ steps.COMMIT_MESSAGE_ID.outputs.replaced }}" | head -n 1)
           echo "COMMIT_MESSAGE=${COMMIT_MESSAGE}" >> $GITHUB_ENV
   
       - name: Send Discord Notification
