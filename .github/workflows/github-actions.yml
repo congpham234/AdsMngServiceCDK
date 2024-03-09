@@ -92,7 +92,7 @@ jobs:
 
       - name: Get the commit message title
         run: |
-          COMMIT_MESSAGE=("${{ steps.COMMIT_MESSAGE_ID.outputs.replaced }}" | head -n 1)
+          COMMIT_MESSAGE=$(echo "${{ steps.COMMIT_MESSAGE_ID.outputs.replaced }}" | head -n 1)
           echo "COMMIT_MESSAGE=${COMMIT_MESSAGE}" >> $GITHUB_ENV
   
       - name: Send Discord Notification
