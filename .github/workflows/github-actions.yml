@@ -94,10 +94,10 @@ jobs:
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ job.status }}
+          status: ${{ contains(needs.*.result, 'failure') && 'Failure' || 'Success' }}
           title: "${{ env.COMMIT_MESSAGE }}"
           image: ${{ secrets.EMBED_IMAGE }}
-          color: 0x6AA84F
+          color: ${{ contains(needs.*.result, 'failure') && '0xFF0000' || '0x00FF00' }}
           url: "https://github.com/congpham234/DeliveryServiceCDK"
           username: Kilala
           avatar_url: ${{ secrets.EMBED_IMAGE }}
