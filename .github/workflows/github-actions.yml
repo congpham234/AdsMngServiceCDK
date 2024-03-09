@@ -46,7 +46,7 @@ jobs:
         run: aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 730335480908.dkr.ecr.us-west-2.amazonaws.com/delivery-service-ecr-repo
 
       - name: Tag Docker Image with Latest
-        run: docker tag delivery-service:latest 730335480908.dkr.ecr.us-west-2.amazonaws.com/delivery-service-ecr-repo:latest
+        run: docker tag delivery-service:latest 730335480908.dkr.ecr.us-west-2.amazonaws.com/delivery-service-ecr-repo:${{ env.RUN_ID }}
 
       - name: Push Docker Image to ECR
         run: docker push 730335480908.dkr.ecr.us-west-2.amazonaws.com/delivery-service-ecr-repo:${{ env.RUN_ID }}
