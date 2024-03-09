@@ -90,7 +90,7 @@ jobs:
           string: ${{ env.COMMIT_MESSAGE }}
           replace-with: ''
 
-      - name: Access client_payload data for commit message
+      - name: Get the commit message title
         run: |
           COMMIT_MESSAGE=("${{ steps.COMMIT_MESSAGE_ID.outputs.replaced }}" | head -n 1)
           echo "COMMIT_MESSAGE=${COMMIT_MESSAGE}" >> $GITHUB_ENV
