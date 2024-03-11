@@ -16,8 +16,8 @@ export class DynamodbStack extends Stack {
     super(scope, id, props);
     this.deliveryServiceDdb = new Table(this, 'DeliveryServiceDdb', {
       tableName: 'Deliveries',
-      partitionKey: { name: 'DeliveryId', type: AttributeType.STRING },
-      sortKey: { name: 'OrderId', type: AttributeType.STRING },
+      partitionKey: { name: 'deliveryId', type: AttributeType.STRING },
+      sortKey: { name: 'orderId', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.DESTROY, // NOT recommended for production
     });
