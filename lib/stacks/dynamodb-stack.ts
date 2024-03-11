@@ -21,7 +21,5 @@ export class DynamodbStack extends Stack {
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.DESTROY, // NOT recommended for production
     });
-
-    this.deliveryServiceDdb.grantReadWriteData(props.serviceRole);
   }
 }
