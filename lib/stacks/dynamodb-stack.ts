@@ -21,7 +21,7 @@ export class DynamodbStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY, // NOT recommended for production
     });
 
-    // this.deliveryServiceDdb.grantReadWriteData(props.serviceRole);
+    this.deliveryServiceDdb.grantReadWriteData(props.serviceRole);
     this.exportValue(this.deliveryServiceDdb.tableArn);
   }
 }
