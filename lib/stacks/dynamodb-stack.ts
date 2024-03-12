@@ -15,14 +15,13 @@ export class DynamodbStack extends Stack {
   constructor(scope: Construct, id: string, props: DynamodbStackProps) {
     super(scope, id, props);
     this.deliveryServiceDdb = new Table(this, 'DeliveryServiceDdb', {
-      tableName: 'Deliveries',
+      tableName: 'Delivery',
       partitionKey: { name: 'deliveryId', type: AttributeType.STRING },
-      sortKey: { name: 'orderId', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.DESTROY, // NOT recommended for production
     });
 
-    this.deliveryServiceDdb.grantReadWriteData(props.serviceRole);
+    // this.deliveryServiceDdb.grantReadWriteData(props.serviceRole);
     this.exportValue(this.deliveryServiceDdb.tableArn);
   }
 }
