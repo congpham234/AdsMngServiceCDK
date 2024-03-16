@@ -102,5 +102,5 @@ jobs:
           image: ${{ secrets.EMBED_IMAGE }}
           color: ${{ contains(needs.*.result, 'failure') && '0xFF0000' || '0x00FF00' }}
           url: "https://github.com/congpham234/DeliveryServiceCDK"
-          username: Kilala
-          avatar_url: ${{ secrets.EMBED_IMAGE }}
+          username: ${{ contains(needs.*.result, 'failure') && 'Ur MOM' || 'Kilala' }}
+          avatar_url: ${{ contains(needs.*.result, 'failure') && secrets.EMBED_IMAGE_FAILURE || secrets.EMBED_IMAGE_SUCCESS }}
