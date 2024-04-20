@@ -8,15 +8,14 @@ export interface S3StackProps extends StackProps {
 }
 
 export class S3Stack extends Stack {
-
   readonly clientImageBucket: Bucket;
 
   constructor(scope: Construct, id: string, props: S3StackProps) {
     super(scope, id, props);
-    this.clientImageBucket = new Bucket(this, "ClientImageBucketId", {
-      bucketName: "client-image-bucket-id",
+    this.clientImageBucket = new Bucket(this, 'ClientImageBucketId', {
+      bucketName: 'client-image-bucket-id',
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-      encryption: BucketEncryption.S3_MANAGED
+      encryption: BucketEncryption.S3_MANAGED,
     });
 
     this.clientImageBucket.grantReadWrite(props.serviceRole);
