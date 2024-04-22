@@ -15,10 +15,10 @@ export class ApiGatewayStack extends Stack {
   constructor(scope: Construct, id: string, props: ApiGatewayStackProps) {
     super(scope, id, props);
 
-    this.restApi = new LambdaRestApi(this, 'DeliveryServApiGatewayId', {
+    this.restApi = new LambdaRestApi(this, 'AdsMngServiceApiGatewayId', {
       handler: props.lambdaFunction,
-      restApiName: 'DeliveryServApiGatewayName',
-      description: 'Delivery Service Rest Api Gateway',
+      restApiName: 'AdsMngServiceApiGatewayName',
+      description: 'Ads Management Service Rest Api Gateway',
     });
   }
 }

@@ -11,8 +11,8 @@ export class ServiceRoleStack extends Stack {
   constructor(scope: Construct, id: string, props: ServiceRoleStackProps) {
     super(scope, id, props);
 
-    this.serviceRole = new Role(this, 'DeliveryServiceRoleId', {
-      roleName: 'DeliveryServiceRoleName',
+    this.serviceRole = new Role(this, 'AdsMngServiceRoleId', {
+      roleName: 'AdsMngServiceRoleName',
       assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
       managedPolicies: [
         ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaVPCAccessExecutionRole'),
