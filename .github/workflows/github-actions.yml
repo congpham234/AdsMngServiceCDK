@@ -1,4 +1,4 @@
-name: Delivery Service CI/CD
+name: Advertisement Mangement Service CI/CD
 
 on:
   push:
@@ -12,10 +12,10 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: us-west-2
-  COMMIT_MESSAGE: ${{ github.event.client_payload.COMMIT_MESSAGE || format('DeliveryServiceCDK - {0}', github.event.head_commit.message) }}
+  COMMIT_MESSAGE: ${{ github.event.client_payload.COMMIT_MESSAGE || format('AdsMngServiceCDK - {0}', github.event.head_commit.message) }}
 
 concurrency:
-  group: delivery-service-deployment-group
+  group: adsmngservice-deployment-group
   cancel-in-progress: false
 
 jobs:
@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout DeliveryService Repo repository
+      - name: Checkout AdsMngService Repo repository
         uses: actions/checkout@v2
         with:
-          repository: congpham234/DeliveryService
+          repository: congpham234/AdsMngService
           ref: main
 
       - name: Set up Node.js
@@ -101,6 +101,6 @@ jobs:
           title: "${{ env.COMMIT_MESSAGE }}"
           image: ${{ secrets.EMBED_IMAGE }}
           color: ${{ contains(needs.*.result, 'failure') && '0xFF0000' || '0x00FF00' }}
-          url: "https://github.com/congpham234/DeliveryServiceCDK"
+          url: "https://github.com/congpham234/AdsMngServiceCDK"
           username: ${{ contains(needs.*.result, 'failure') && 'Ur MOM' || 'Kilala' }}
           avatar_url: ${{ contains(needs.*.result, 'failure') && secrets.EMBED_IMAGE_FAILURE || secrets.EMBED_IMAGE_SUCCESS }}
