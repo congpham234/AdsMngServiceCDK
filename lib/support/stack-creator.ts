@@ -21,11 +21,11 @@ export interface CreateStacksResponse {
 }
 
 export const createStacks = (app: App): CreateStacksResponse => {
-  const stackPrefix = 'alpha-NA-us-west-2-DeliveryService';
+  const stackPrefix = 'alpha-NA-us-west-2-AdsMngService';
 
   // const vpcStack = new VpcStack(
   //   app,
-  //   `${stackPrefix}-DeliveryServiceVpcStack`,
+  //   `${stackPrefix}-AdsMngServiceVpcStack`,
   //   {},
   // );
 
