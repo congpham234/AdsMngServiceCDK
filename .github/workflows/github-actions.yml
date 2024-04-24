@@ -19,39 +19,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy-ecr-repo:
-    runs-on: ubuntu-latest
-    env:
-      DEPLOY_ECR_REPO: "true"
-
-    steps:
-      - name: Checkout AdsMngServiceCDK Repo repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-      - name: Install AWS CDK CLI
-        run: npm install -g aws-cdk
-
-      - name: Running bootstrap
-        run: cdk bootstrap
-
-      - name: Deploy CDK stack
-        run: cdk synth && cdk deploy --require-approval never "*"
-
   build-and-deploy-code:
     runs-on: ubuntu-latest
-    needs: build-and-deploy-ecr-repo
-    
+
     steps:
       - name: Checkout AdsMngService Repo repository
         uses: actions/checkout@v2
@@ -112,7 +82,7 @@ jobs:
 
   send-discord-notification:
     runs-on: ubuntu-latest
-    needs: [build-and-deploy-ecr-repo, build-and-deploy-code, build-and-deploy-cdk]
+    needs: [build-and-deploy-code, build-and-deploy-cdk]
     if: always()
     steps:
       - name: Clean up commit message

@@ -22,8 +22,6 @@ export interface CreateStacksResponse {
 
 export const createStacks = (app: App): CreateStacksResponse => {
   const stackPrefix = 'alpha-NA-us-west-2-AdsMngService';
-  const deployEcrRepo = process.env.DEPLOY_ECR_REPO === 'true';
-
   // const vpcStack = new VpcStack(
   //   app,
   //   `${stackPrefix}-AdsMngServiceVpcStack`,
@@ -31,14 +29,6 @@ export const createStacks = (app: App): CreateStacksResponse => {
   // );
 
   const ecrRepoStack = new EcrStack(app, `${stackPrefix}-ecrStack`, {});
-
-  if (deployEcrRepo) {
-    return {
-      stacks: {
-        ecrRepoStack,
-      },
-    };
-  }
 
   const serviceRoleStack = new ServiceRoleStack(app, `${stackPrefix}-ServiceRoleStack`, {});
 
