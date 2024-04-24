@@ -12,8 +12,8 @@ export class S3Stack extends Stack {
 
   constructor(scope: Construct, id: string, props: S3StackProps) {
     super(scope, id, props);
-    this.clientImageBucket = new Bucket(this, 'ClientImageBucketId', {
-      bucketName: 'client-image-bucket-id',
+    this.clientImageBucket = new Bucket(this, 'AdsMngClientImageBucketId', {
+      bucketName: 'ads-mng-client-image-bucket',
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       encryption: BucketEncryption.S3_MANAGED,
     });
