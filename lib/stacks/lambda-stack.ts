@@ -17,6 +17,9 @@ export class LambdaStack extends Stack {
   constructor(scope: Construct, id: string, props: LambdaStackProps) {
     super(scope, id, props);
 
+    // Grant service role to pull the new code to lambda function
+    props.ecrRepo.grantPull(props.serviceRole);
+
     // Define Lambda function using ECR image as code
     this.lambdaFunction = new Function(this, 'AdsMngServiceLambdaId', {
       functionName: 'AdsMngServiceLambda',

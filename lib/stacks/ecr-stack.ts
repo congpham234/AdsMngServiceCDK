@@ -1,13 +1,9 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
 import { IRepository, Repository } from 'aws-cdk-lib/aws-ecr';
-import { IRole } from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
 
 
-export interface EcrStackProps extends StackProps {
-  // vpc: IVpc;
-  readonly serviceRole: IRole;
-}
+export type EcrStackProps = StackProps
 
 export class EcrStack extends Stack {
   public readonly ecrRepository: IRepository;
@@ -17,6 +13,5 @@ export class EcrStack extends Stack {
     this.ecrRepository = new Repository(this, 'AdsMngServiceEcrRepoId', {
       repositoryName: 'adsmngservice-ecr-repo',
     });
-    this.ecrRepository.grantPull(props.serviceRole);
   }
 }

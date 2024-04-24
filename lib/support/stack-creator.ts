@@ -8,12 +8,12 @@ import { S3Stack } from '../stacks/s3-stack';
 
 export interface Stacks {
   // vpcStack: VpcStack;
-  serviceRoleStack: ServiceRoleStack;
   ecrRepoStack: EcrStack;
-  lambdaStack: LambdaStack;
-  dynamoDbStack: DynamodbStack;
-  apiGatewayStack: ApiGatewayStack;
-  s3Stack: S3Stack;
+  serviceRoleStack?: ServiceRoleStack;
+  lambdaStack?: LambdaStack;
+  dynamoDbStack?: DynamodbStack;
+  apiGatewayStack?: ApiGatewayStack;
+  s3Stack?: S3Stack;
 }
 
 export interface CreateStacksResponse {
@@ -22,6 +22,7 @@ export interface CreateStacksResponse {
 
 export const createStacks = (app: App): CreateStacksResponse => {
   const stackPrefix = 'alpha-NA-us-west-2-AdsMngService';
+  const deployEcrRepo = process.env.DEPLOY_ECR_REPO === 'true';
 
   // const vpcStack = new VpcStack(
   //   app,
@@ -29,11 +30,17 @@ export const createStacks = (app: App): CreateStacksResponse => {
   //   {},
   // );
 
-  const serviceRoleStack = new ServiceRoleStack(app, `${stackPrefix}-ServiceRoleStack`, {});
+  const ecrRepoStack = new EcrStack(app, `${stackPrefix}-ecrStack`, {});
 
-  const ecrRepoStack = new EcrStack(app, `${stackPrefix}-ecrStack`, {
-    serviceRole: serviceRoleStack.serviceRole,
-  });
+  if (deployEcrRepo) {
+    return {
+      stacks: {
+        ecrRepoStack,
+      },
+    };
+  }
+
+  const serviceRoleStack = new ServiceRoleStack(app, `${stackPrefix}-ServiceRoleStack`, {});
 
   const lambdaStack = new LambdaStack(app, `${stackPrefix}-LambdaStack`, {
     serviceRole: serviceRoleStack.serviceRole,
