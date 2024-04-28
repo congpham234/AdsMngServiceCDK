@@ -9,6 +9,7 @@ export interface SecretsManagerStackProps extends StackProps {
 
 export class SecretsManagerStack extends Stack {
   readonly bookingDotCom: Secret;
+  readonly openAiApiKey: Secret;
 
   constructor(scope: Construct, id: string, props: SecretsManagerStackProps) {
     super(scope, id, props);
@@ -20,6 +21,13 @@ export class SecretsManagerStack extends Stack {
       description: 'This is a secret for booking dot com Rapid API.',
     });
 
+    this.openAiApiKey = new Secret(this, 'OpenAiAPIKeyId', {
+      secretName: 'OpenAiAPIKeyId',
+      // You can provide an initial value or let it be auto-generated
+      description: 'This is a secret for OpenAi API key.',
+    });
+
     this.bookingDotCom.grantRead(props.serviceRole);
+    this.openAiApiKey.grantRead(props.serviceRole);
   }
 }
