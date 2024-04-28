@@ -5,6 +5,7 @@ import { EcrStack } from '../stacks/ecr-stack';
 import { DynamodbStack } from '../stacks/dynamodb-stack';
 import { ApiGatewayStack } from '../stacks/apigateway-stack';
 import { S3Stack } from '../stacks/s3-stack';
+import { SecretsManagerStack } from '../stacks/secretsmanager-stack';
 
 export interface Stacks {
   // vpcStack: VpcStack;
@@ -14,6 +15,7 @@ export interface Stacks {
   dynamoDbStack?: DynamodbStack;
   apiGatewayStack?: ApiGatewayStack;
   s3Stack?: S3Stack;
+  secretsManagerStack?: SecretsManagerStack;
 }
 
 export interface CreateStacksResponse {
@@ -49,6 +51,10 @@ export const createStacks = (app: App): CreateStacksResponse => {
     serviceRole: serviceRoleStack.serviceRole,
   });
 
+  const secretsManagerStack = new SecretsManagerStack(app, `${stackPrefix}-SecretsManagerStack`, {
+    serviceRole: serviceRoleStack.serviceRole,
+  });
+
   return {
     stacks: {
       // vpcStack,
@@ -58,6 +64,7 @@ export const createStacks = (app: App): CreateStacksResponse => {
       dynamoDbStack,
       apiGatewayStack,
       s3Stack,
+      secretsManagerStack,
     },
   };
 };
