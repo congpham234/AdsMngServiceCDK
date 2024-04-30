@@ -28,7 +28,8 @@ export class LambdaStack extends Stack {
       code: Code.fromEcrImage(props.ecrRepo, { tag: process.env.RUN_ID }),
       role: props.serviceRole,
       environment: {
-        Stage: 'alpha', // TODO: make this configurable
+        STAGE: 'alpha', // TODO: make this configurable
+        NODE_OPTIONS: '--enable-source-maps',
       },
       memorySize: 3000,
       timeout: Duration.minutes(15),
