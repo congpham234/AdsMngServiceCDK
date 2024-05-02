@@ -3,6 +3,7 @@ import { IRepository } from 'aws-cdk-lib/aws-ecr';
 import { IRole } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Handler, IFunction, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
+import { SERVICE_NAME } from '../config/constants';
 
 
 export interface LambdaStackProps extends StackProps {
@@ -21,8 +22,8 @@ export class LambdaStack extends Stack {
     props.ecrRepo.grantPull(props.serviceRole);
 
     // Define Lambda function using ECR image as code
-    this.lambdaFunction = new Function(this, 'AdsMngServiceLambdaId', {
-      functionName: 'AdsMngServiceLambda',
+    this.lambdaFunction = new Function(this, `${SERVICE_NAME}LambdaId`, {
+      functionName: `${SERVICE_NAME}Lambda`,
       runtime: Runtime.FROM_IMAGE,
       handler: Handler.FROM_IMAGE,
       code: Code.fromEcrImage(props.ecrRepo, { tag: process.env.RUN_ID }),
@@ -33,7 +34,7 @@ export class LambdaStack extends Stack {
       },
       memorySize: 3000,
       timeout: Duration.minutes(15),
-      description: 'Ads Management Service Lambda',
+      description: `${SERVICE_NAME} Lambda`,
       // vpc: props.vpc
     });
   }

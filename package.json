@@ -1,8 +1,8 @@
 {
-  "name": "adsmngservicecdk",
+  "name": "gopalbackendcdk",
   "version": "0.1.0",
   "bin": {
-    "adsmngservicecdk": "bin/adsmngservicecdk.js"
+    "gopalbackendcdk": "bin/gopalbackendcdk.js"
   },
   "scripts": {
     "build": "tsc && npm run lint",

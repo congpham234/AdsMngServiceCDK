@@ -1,4 +1,4 @@
-name: Advertisement Mangement Service CI/CD
+name: GoPal Backend CI/CD
 
 on:
   push:
@@ -12,10 +12,10 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: us-west-2
-  COMMIT_MESSAGE: ${{ github.event.client_payload.COMMIT_MESSAGE || format('AdsMngServiceCDK - {0}', github.event.head_commit.message) }}
+  COMMIT_MESSAGE: ${{ github.event.client_payload.COMMIT_MESSAGE || format('GoPalBackendCDK - {0}', github.event.head_commit.message) }}
 
 concurrency:
-  group: adsmngservice-deployment-group
+  group: gopal-deployment-group
   cancel-in-progress: false
 
 jobs:
@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout AdsMngService Repo repository
+      - name: Checkout GoPalBackend Repo repository
         uses: actions/checkout@v2
         with:
-          repository: congpham234/AdsMngService
+          repository: congpham234/GoPalBackend
           ref: main
 
       - name: Set up Node.js
@@ -41,13 +41,13 @@ jobs:
         run: npm run build
 
       - name: Build Docker Image
-        run: docker build --platform linux/amd64 -t adsmng-service:latest .
+        run: docker build --platform linux/amd64 -t gopalbackend:latest .
 
       - name: Login to AWS ECR Docker
         run: aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${{ secrets.ECR_REPO_URL }}
 
       - name: Tag Docker Image with Latest
-        run: docker tag adsmng-service:latest ${{ secrets.ECR_REPO_URL }}:${{ env.RUN_ID }}
+        run: docker tag gopalbackend:latest ${{ secrets.ECR_REPO_URL }}:${{ env.RUN_ID }}
 
       - name: Push Docker Image to ECR
         run: docker push ${{ secrets.ECR_REPO_URL }}:${{ env.RUN_ID }}
@@ -57,7 +57,7 @@ jobs:
     needs: build-and-deploy-code
 
     steps:
-      - name: Checkout AdsMngServiceCDK Repo repository
+      - name: Checkout GoPalBackendCDK Repo repository
         uses: actions/checkout@v2
 
       - name: Set up Node.js
@@ -104,6 +104,6 @@ jobs:
           title: "${{ env.COMMIT_MESSAGE }}"
           image: ${{ secrets.EMBED_IMAGE }}
           color: ${{ contains(needs.*.result, 'failure') && '0xFF0000' || '0x00FF00' }}
-          url: "https://github.com/congpham234/AdsMngServiceCDK"
+          url: "https://github.com/congpham234/GoPalBackendCDK"
           username: ${{ contains(needs.*.result, 'failure') && 'Ur MOM' || 'Kilala' }}
           avatar_url: ${{ contains(needs.*.result, 'failure') && secrets.EMBED_IMAGE_FAILURE || secrets.EMBED_IMAGE_SUCCESS }}

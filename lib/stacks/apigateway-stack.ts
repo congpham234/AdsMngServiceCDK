@@ -2,6 +2,7 @@ import { Stack, StackProps } from 'aws-cdk-lib';
 import { IRestApi, LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { IFunction } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
+import { SERVICE_NAME } from '../config/constants';
 
 
 export interface ApiGatewayStackProps extends StackProps {
@@ -15,10 +16,10 @@ export class ApiGatewayStack extends Stack {
   constructor(scope: Construct, id: string, props: ApiGatewayStackProps) {
     super(scope, id, props);
 
-    this.restApi = new LambdaRestApi(this, 'AdsMngServiceApiGatewayId', {
+    this.restApi = new LambdaRestApi(this, `${SERVICE_NAME}ApiGatewayId`, {
       handler: props.lambdaFunction,
-      restApiName: 'AdsMngServiceApiGatewayName',
-      description: 'Ads Management Service Rest Api Gateway',
+      restApiName: `${SERVICE_NAME}ApiGatewayName`,
+      description: `${SERVICE_NAME} Rest Api Gateway`,
     });
   }
 }
