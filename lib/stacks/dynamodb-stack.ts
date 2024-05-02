@@ -3,7 +3,6 @@ import { AttributeType, BillingMode, ITable, Table } from 'aws-cdk-lib/aws-dynam
 import { IRole } from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
 
-
 export interface DynamodbStackProps extends StackProps {
   // vpc: IVpc;
   readonly serviceRole: IRole;

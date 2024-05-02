@@ -3,7 +3,6 @@ import { IRole, ManagedPolicy, Role, ServicePrincipal } from 'aws-cdk-lib/aws-ia
 import { Construct } from 'constructs';
 import { SERVICE_NAME } from '../config/constants';
 
-
 export type ServiceRoleStackProps = StackProps
 
 export class ServiceRoleStack extends Stack {

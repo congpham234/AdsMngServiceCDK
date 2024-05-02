@@ -5,7 +5,6 @@ import { Code, Function, Handler, IFunction, Runtime } from 'aws-cdk-lib/aws-lam
 import { Construct } from 'constructs';
 import { SERVICE_NAME } from '../config/constants';
 
-
 export interface LambdaStackProps extends StackProps {
   // vpc: IVpc;
   readonly serviceRole: IRole;

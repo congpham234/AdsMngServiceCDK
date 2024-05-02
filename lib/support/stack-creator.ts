@@ -10,11 +10,11 @@ export const createStacks = (app: App) => {
   const stackPrefix = `alpha-NA-us-west-2-${SERVICE_NAME}`;
   // const vpcStack = new VpcStack(
   //   app,
-  //   `${stackPrefix}-AdsMngServiceVpcStack`,
+  //   `${stackPrefix}-VpcStack`,
   //   {},
   // );
 
-  const ecrRepoStack = new EcrStack(app, `${stackPrefix}-ecrStack`, {});
+  const ecrRepoStack = new EcrStack(app, `${stackPrefix}-EcrStack`, {});
 
   const serviceRoleStack = new ServiceRoleStack(app, `${stackPrefix}-ServiceRoleStack`, {});
 

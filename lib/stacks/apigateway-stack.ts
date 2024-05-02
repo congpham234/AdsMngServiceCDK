@@ -4,7 +4,6 @@ import { IFunction } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { SERVICE_NAME } from '../config/constants';
 
-
 export interface ApiGatewayStackProps extends StackProps {
   // vpc: IVpc;
   readonly lambdaFunction: IFunction;
