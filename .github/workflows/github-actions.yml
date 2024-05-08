@@ -8,10 +8,11 @@ on:
     types: [trigger-workflow]
 
 env:
+  STAGE: alpha
+  REGION: us-west-2
   RUN_ID: ${{ github.run_id }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_DEFAULT_REGION: us-west-2
   COMMIT_MESSAGE: ${{ github.event.client_payload.COMMIT_MESSAGE || format('GoPalBackendCDK - {0}', github.event.head_commit.message) }}
 
 concurrency:
@@ -44,7 +45,7 @@ jobs:
         run: docker build --platform linux/amd64 -t gopalbackend:latest .
 
       - name: Login to AWS ECR Docker
-        run: aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${{ secrets.ECR_REPO_URL }}
+        run: aws ecr get-login-password --region ${{ env.REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPO_URL }}
 
       - name: Tag Docker Image with Latest
         run: docker tag gopalbackend:latest ${{ secrets.ECR_REPO_URL }}:${{ env.RUN_ID }}
@@ -95,7 +96,7 @@ jobs:
 
       - name: Get the commit message title
         run: echo "COMMIT_MESSAGE=$(echo "${{ steps.COMMIT_MESSAGE_ID.outputs.replaced }}" | head -n 1)" >> $GITHUB_ENV
-  
+
       - name: Send Discord Notification
         uses: sarisia/actions-status-discord@v1
         with:

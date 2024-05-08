@@ -1,6 +1,6 @@
 export enum Stage {
-  ALPHA = 'Alpha',
-  BETA = 'Beta',
+  ALPHA = 'alpha',
+  BETA = 'beta',
 }
 
 export enum Region {

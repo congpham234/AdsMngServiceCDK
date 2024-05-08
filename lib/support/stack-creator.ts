@@ -5,9 +5,10 @@ import { EcrStack } from '../stacks/ecr-stack';
 import { ApiGatewayStack } from '../stacks/apigateway-stack';
 import { SecretsManagerStack } from '../stacks/secretsmanager-stack';
 import { SERVICE_NAME } from '../config/constants';
+import { UserPoolStack } from '../stacks/userpool-stack';
 
-export const createStacks = (app: App) => {
-  const stackPrefix = `alpha-NA-us-west-2-${SERVICE_NAME}`;
+export const createStacks = (app: App, stage: string, region: string) => {
+  const stackPrefix = `${stage}-NA-${region}-${SERVICE_NAME}`;
   // const vpcStack = new VpcStack(
   //   app,
   //   `${stackPrefix}-VpcStack`,
@@ -23,13 +24,15 @@ export const createStacks = (app: App) => {
     ecrRepo: ecrRepoStack.ecrRepository,
   });
 
-  const apiGatewayStack = new ApiGatewayStack(app, `${stackPrefix}-ApiGatewayStack`, {
-    lambdaFunction: lambdaStack.lambdaFunction,
-  });
-
-
   const secretsManagerStack = new SecretsManagerStack(app, `${stackPrefix}-SecretsManagerStack`, {
     serviceRole: serviceRoleStack.serviceRole,
+  });
+
+  const userPoolStack = new UserPoolStack(app, `${stackPrefix}-UserPoolStack`, {});
+
+  const apiGatewayStack = new ApiGatewayStack(app, `${stackPrefix}-ApiGatewayStack`, {
+    lambdaFunction: lambdaStack.lambdaFunction,
+    userPool: userPoolStack.userPool,
   });
 
   // const dynamoDbStack = new DynamodbStack(app, `${stackPrefix}-DynamoDbStack`, {
@@ -50,6 +53,7 @@ export const createStacks = (app: App) => {
       lambdaStack,
       apiGatewayStack,
       secretsManagerStack,
+      userPoolStack,
     },
   };
 };
