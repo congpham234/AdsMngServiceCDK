@@ -10,9 +10,9 @@ if (!stage) {
 }
 
 // Retrieve the 'region' environment variable
-const region = process.env.REGION;
+const region = process.env.AWS_DEFAULT_REGION;
 if (!region) {
-  throw new Error('The \'REGION\' environment variable must be defined.');
+  throw new Error('The \'AWS_DEFAULT_REGION\' environment variable must be defined.');
 }
 
 // Ensure proper formatting for the stage
