@@ -40,7 +40,7 @@ export class ApiGatewayStack extends Stack {
       defaultCorsPreflightOptions: {
         allowOrigins: allowedOrigins,
         allowMethods: Cors.ALL_METHODS,
-        allowHeaders: Cors.DEFAULT_HEADERS.concat(['Authorization']),
+        allowHeaders: ['*'],
       },
     });
   }
