@@ -1,5 +1,6 @@
 import { App } from 'aws-cdk-lib';
 import { createStacks } from './support/stack-creator';
+import { Stage } from './config/types';
 
 const app = new App();
 
@@ -16,7 +17,7 @@ if (!region) {
 }
 
 // Ensure proper formatting for the stage
-const formattedStage = stage.toLowerCase();
+const formattedStage = stage.toLowerCase() as Stage;
 
 createStacks(app, formattedStage, region);
 

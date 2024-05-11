@@ -1,14 +1,15 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { AuthorizationType, CognitoUserPoolsAuthorizer, IRestApi, LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { AuthorizationType, CognitoUserPoolsAuthorizer, IRestApi, LambdaRestApi, Cors } from 'aws-cdk-lib/aws-apigateway';
 import { IFunction } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
-import { SERVICE_NAME } from '../config/constants';
+import { ALLOW_ORIGIN_STAGE_MAP, SERVICE_NAME } from '../config/constants';
 import { IUserPool } from 'aws-cdk-lib/aws-cognito';
+import { Stage } from '../config/types';
 
 export interface ApiGatewayStackProps extends StackProps {
-  // vpc: IVpc;
   readonly lambdaFunction: IFunction;
   readonly userPool: IUserPool;
+  readonly stage: Stage;
 }
 
 export class ApiGatewayStack extends Stack {
@@ -25,6 +26,9 @@ export class ApiGatewayStack extends Stack {
       identitySource: 'method.request.header.Authorization',
     });
 
+    const allowedOrigins = ALLOW_ORIGIN_STAGE_MAP.get(props.stage) || [];
+
+    // LambdaRestApi with specific CORS enabled for localhost and a CloudFront URL
     this.restApi = new LambdaRestApi(this, `${SERVICE_NAME}ApiGatewayId`, {
       handler: props.lambdaFunction,
       restApiName: `${SERVICE_NAME}ApiGatewayName`,
@@ -32,6 +36,11 @@ export class ApiGatewayStack extends Stack {
       defaultMethodOptions: {
         authorizer: this.authorizer,
         authorizationType: AuthorizationType.COGNITO,
+      },
+      defaultCorsPreflightOptions: {
+        allowOrigins: allowedOrigins,
+        allowMethods: Cors.ALL_METHODS,
+        allowHeaders: Cors.DEFAULT_HEADERS.concat(['Authorization']),
       },
     });
   }

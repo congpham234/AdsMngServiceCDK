@@ -4,11 +4,13 @@ import { IRole } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Handler, IFunction, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { SERVICE_NAME } from '../config/constants';
+import { Stage } from '../config/types';
 
 export interface LambdaStackProps extends StackProps {
   // vpc: IVpc;
   readonly serviceRole: IRole;
   readonly ecrRepo: IRepository;
+  readonly stage: Stage;
 }
 
 export class LambdaStack extends Stack {
@@ -28,7 +30,7 @@ export class LambdaStack extends Stack {
       code: Code.fromEcrImage(props.ecrRepo, { tag: process.env.RUN_ID }),
       role: props.serviceRole,
       environment: {
-        STAGE: 'alpha', // TODO: make this configurable
+        STAGE: props.stage,
         NODE_OPTIONS: '--enable-source-maps',
       },
       memorySize: 3000,
