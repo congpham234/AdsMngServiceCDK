@@ -7,6 +7,7 @@ import { SecretsManagerStack } from '../stacks/secretsmanager-stack';
 import { SERVICE_NAME } from '../config/constants';
 import { UserPoolStack } from '../stacks/userpool-stack';
 import { Stage } from '../config/types';
+import { EventSchedulerStack } from '../stacks/eventscheduler-stack';
 
 export const createStacks = (app: App, stage: Stage, region: string) => {
   const stackPrefix = `${stage}-NA-${region}-${SERVICE_NAME}`;
@@ -24,6 +25,10 @@ export const createStacks = (app: App, stage: Stage, region: string) => {
     stage,
     serviceRole: serviceRoleStack.serviceRole,
     ecrRepo: ecrRepoStack.ecrRepository,
+  });
+
+  const eventSchedulerStack = new EventSchedulerStack(app, `${stackPrefix}-EventSchedulerStack`, {
+    lambdaFunction: lambdaStack.lambdaFunction,
   });
 
   const secretsManagerStack = new SecretsManagerStack(app, `${stackPrefix}-SecretsManagerStack`, {
@@ -57,6 +62,7 @@ export const createStacks = (app: App, stage: Stage, region: string) => {
       apiGatewayStack,
       secretsManagerStack,
       userPoolStack,
+      eventSchedulerStack,
     },
   };
 };
