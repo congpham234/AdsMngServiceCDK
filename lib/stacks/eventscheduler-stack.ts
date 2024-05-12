@@ -13,7 +13,7 @@ export class EventSchedulerStack extends Stack {
     super(scope, id, props);
     // Schedule the Lambda function to be triggered every minute
     const rule = new Rule(this, 'PingLambdaEvery1Minute', {
-      schedule: Schedule.rate(Duration.minutes(1)),
+      schedule: Schedule.cron({ minute: '*' }),
     });
 
     rule.addTarget(new aws_events_targets.LambdaFunction(props.lambdaFunction));
