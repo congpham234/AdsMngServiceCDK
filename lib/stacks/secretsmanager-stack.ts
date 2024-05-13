@@ -10,24 +10,28 @@ export interface SecretsManagerStackProps extends StackProps {
 export class SecretsManagerStack extends Stack {
   readonly bookingDotCom: Secret;
   readonly openAiApiKey: Secret;
+  readonly googlePlacesApiKey: Secret;
 
   constructor(scope: Construct, id: string, props: SecretsManagerStackProps) {
     super(scope, id, props);
 
-    // Create a new secret or reference an existing one
     this.bookingDotCom = new Secret(this, 'BookingDotComAPIKeyId', {
       secretName: 'BookingDotComAPIKey',
-      // You can provide an initial value or let it be auto-generated
       description: 'This is a secret for booking dot com Rapid API.',
     });
 
     this.openAiApiKey = new Secret(this, 'OpenAiAPIKeyId', {
       secretName: 'OpenAiAPIKeyId',
-      // You can provide an initial value or let it be auto-generated
       description: 'This is a secret for OpenAi API key.',
+    });
+
+    this.googlePlacesApiKey = new Secret(this, 'GooglePlacesAPIKeyId', {
+      secretName: 'GooglePlacesAPIKey',
+      description: 'This is a secret for Google Places API key.',
     });
 
     this.bookingDotCom.grantRead(props.serviceRole);
     this.openAiApiKey.grantRead(props.serviceRole);
+    this.googlePlacesApiKey.grantRead(props.serviceRole);
   }
 }
