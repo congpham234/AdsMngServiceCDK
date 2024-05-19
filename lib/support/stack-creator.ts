@@ -8,6 +8,7 @@ import { SERVICE_NAME } from '../config/constants';
 import { UserPoolStack } from '../stacks/userpool-stack';
 import { Stage } from '../config/types';
 import { EventSchedulerStack } from '../stacks/eventscheduler-stack';
+import { DynamodbStack } from '../stacks/dynamodb-stack';
 
 export const createStacks = (app: App, stage: Stage, region: string) => {
   const stackPrefix = `${stage}-NA-${region}-${SERVICE_NAME}`;
@@ -43,9 +44,9 @@ export const createStacks = (app: App, stage: Stage, region: string) => {
     userPool: userPoolStack.userPool,
   });
 
-  // const dynamoDbStack = new DynamodbStack(app, `${stackPrefix}-DynamoDbStack`, {
-  //   serviceRole: serviceRoleStack.serviceRole,
-  // });
+  const dynamoDbStack = new DynamodbStack(app, `${stackPrefix}-DynamoDbStack`, {
+    serviceRole: serviceRoleStack.serviceRole,
+  });
 
   // const s3Stack = new S3Stack(app, `${stackPrefix}-S3Stack`, {
   //   serviceRole: serviceRoleStack.serviceRole,
@@ -63,6 +64,7 @@ export const createStacks = (app: App, stage: Stage, region: string) => {
       secretsManagerStack,
       userPoolStack,
       eventSchedulerStack,
+      dynamoDbStack,
     },
   };
 };
