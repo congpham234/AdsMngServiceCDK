@@ -37,9 +37,6 @@ export class SecretsManagerStack extends Stack {
       description: 'This is a secret for all external api keys.',
     });
 
-    this.bookingDotCom.grantRead(props.serviceRole);
-    this.openAiApiKey.grantRead(props.serviceRole);
-    this.googlePlacesApiKey.grantRead(props.serviceRole);
     this.secrets.grantRead(props.serviceRole);
   }
 }
