@@ -2,6 +2,7 @@ import { Stack, StackProps } from 'aws-cdk-lib';
 import { IRole } from 'aws-cdk-lib/aws-iam';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
+import { SERVICE_NAME } from '../config/constants';
 
 export interface SecretsManagerStackProps extends StackProps {
   readonly serviceRole: IRole;
@@ -11,6 +12,7 @@ export class SecretsManagerStack extends Stack {
   readonly bookingDotCom: Secret;
   readonly openAiApiKey: Secret;
   readonly googlePlacesApiKey: Secret;
+  readonly secrets: Secret;
 
   constructor(scope: Construct, id: string, props: SecretsManagerStackProps) {
     super(scope, id, props);
@@ -30,8 +32,14 @@ export class SecretsManagerStack extends Stack {
       description: 'This is a secret for Google Places API key.',
     });
 
+    this.secrets = new Secret(this, `${SERVICE_NAME}ExternalAPIKeyId`, {
+      secretName: `${SERVICE_NAME}ExternalAPIKeyId`,
+      description: 'This is a secret for all external api keys.',
+    });
+
     this.bookingDotCom.grantRead(props.serviceRole);
     this.openAiApiKey.grantRead(props.serviceRole);
     this.googlePlacesApiKey.grantRead(props.serviceRole);
+    this.secrets.grantRead(props.serviceRole);
   }
 }
