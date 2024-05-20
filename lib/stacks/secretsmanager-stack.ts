@@ -33,7 +33,7 @@ export class SecretsManagerStack extends Stack {
     });
 
     this.secrets = new Secret(this, `${SERVICE_NAME}ExternalAPIKeyId`, {
-      secretName: `${SERVICE_NAME}ExternalAPIKeyId`,
+      secretName: `${SERVICE_NAME}ExternalAPIKeys`,
       description: 'This is a secret for all external api keys.',
     });
 

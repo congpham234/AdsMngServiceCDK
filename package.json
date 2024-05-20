@@ -5,7 +5,7 @@
     "gopalbackendcdk": "bin/gopalbackendcdk.js"
   },
   "scripts": {
-    "build": "npm run format && tsc && npm run lint && cdk synth",
+    "build": "tsc && npm run lint && cdk synth",
     "watch": "tsc -w",
     "cdk": "cdk",
     "lint": "eslint .",
