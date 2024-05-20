@@ -38,5 +38,10 @@ export class SecretsManagerStack extends Stack {
     });
 
     this.secrets.grantRead(props.serviceRole);
+
+    this.exportValue(this.bookingDotCom.secretArn);
+    this.exportValue(this.openAiApiKey.secretArn);
+    this.exportValue(this.googlePlacesApiKey.secretArn);
+    this.exportValue(this.secrets.secretArn);
   }
 }
