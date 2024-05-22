@@ -36,7 +36,10 @@ export const createStacks = (app: App, stage: Stage, region: string) => {
     serviceRole: serviceRoleStack.serviceRole,
   });
 
-  const userPoolStack = new UserPoolStack(app, `${stackPrefix}-UserPoolStack`, {});
+  const userPoolStack = new UserPoolStack(app, `${stackPrefix}-UserPoolStack`, {
+    googleClientId: secretsManagerStack.googleUserPoolClientId,
+    googleClientSecret: secretsManagerStack.googleUserPoolClientSecret,
+  });
 
   const apiGatewayStack = new ApiGatewayStack(app, `${stackPrefix}-ApiGatewayStack`, {
     stage,

@@ -10,6 +10,8 @@ export interface SecretsManagerStackProps extends StackProps {
 
 export class SecretsManagerStack extends Stack {
   readonly secrets: Secret;
+  readonly googleUserPoolClientId: Secret;
+  readonly googleUserPoolClientSecret: Secret;
 
   constructor(scope: Construct, id: string, props: SecretsManagerStackProps) {
     super(scope, id, props);
@@ -17,6 +19,16 @@ export class SecretsManagerStack extends Stack {
     this.secrets = new Secret(this, `${SERVICE_NAME}ExternalAPIKeyId`, {
       secretName: `${SERVICE_NAME}ExternalAPIKeyId`,
       description: 'This is a secret for all external api keys.',
+    });
+
+    this.googleUserPoolClientId = new Secret(this, `${SERVICE_NAME}GoogleUserPoolClientId`, {
+      secretName: `${SERVICE_NAME}GoogleUserPoolClientId`,
+      description: 'This is the id for Google User Pool',
+    });
+
+    this.googleUserPoolClientSecret = new Secret(this, `${SERVICE_NAME}googleUserPoolClientSecret`, {
+      secretName: `${SERVICE_NAME}googleUserPoolClientSecret`,
+      description: 'This is a secret for Google User Pool',
     });
 
     this.secrets.grantRead(props.serviceRole);
