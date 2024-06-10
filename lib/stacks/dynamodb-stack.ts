@@ -1,4 +1,4 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib';
 import { AttributeType, BillingMode, ITable, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { IRole } from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
@@ -17,25 +17,23 @@ export class DynamodbStack extends Stack {
     super(scope, id, props);
 
     // Destinations Table
-    this.destinationsTable = new Table(this, `${SERVICE_NAME}TravelPlans`, {
-      tableName: 'TravelPlans',
-      partitionKey: { name: 'userId', type: AttributeType.STRING },
-      sortKey: { name: 'planId', type: AttributeType.STRING },
+    this.destinationsTable = new Table(this, `${SERVICE_NAME}DestinationsTable`, {
+      tableName: 'Destinations',
+      partitionKey: { name: 'destId', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
 
-    this.destinationsTable.grantReadWriteData(props.serviceRole);
+    // this.destinationsTable.grantReadWriteData(props.serviceRole);
     this.exportValue(this.destinationsTable.tableArn);
 
     // Itineraries Table
     this.itinerariesTable = new Table(this, `${SERVICE_NAME}ItinerariesTable`, {
       tableName: 'Itineraries',
-      partitionKey: { name: 'userId_planId', type: AttributeType.STRING },
-      sortKey: { name: 'itineraryId', type: AttributeType.STRING },
+      partitionKey: { name: 'itineraryId', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
 
-    this.itinerariesTable.grantReadWriteData(props.serviceRole);
+    // this.itinerariesTable.grantReadWriteData(props.serviceRole);
     this.exportValue(this.itinerariesTable.tableArn);
   }
 }
