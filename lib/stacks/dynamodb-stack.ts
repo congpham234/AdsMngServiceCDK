@@ -10,30 +10,32 @@ export interface DynamodbStackProps extends StackProps {
 }
 
 export class DynamodbStack extends Stack {
-  public readonly destinationsTable: ITable;
-  public readonly itinerariesTable: ITable;
+  public readonly travelPlansTable: ITable;
+  // public readonly itinerariesTable: ITable;
 
   constructor(scope: Construct, id: string, props: DynamodbStackProps) {
     super(scope, id, props);
 
-    // Destinations Table
-    this.destinationsTable = new Table(this, `${SERVICE_NAME}DestinationsTable`, {
-      tableName: 'Destinations',
-      partitionKey: { name: 'destId', type: AttributeType.STRING },
+    // TravelPlans Table
+    this.travelPlansTable = new Table(this, `${SERVICE_NAME}TravelPlans`, {
+      tableName: 'TravelPlans',
+      partitionKey: { name: 'userId', type: AttributeType.STRING },
+      sortKey: { name: 'planId', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
 
-    // this.destinationsTable.grantReadWriteData(props.serviceRole);
-    this.exportValue(this.destinationsTable.tableArn);
+    this.travelPlansTable.grantReadWriteData(props.serviceRole);
+    this.exportValue(this.travelPlansTable.tableArn);
 
     // Itineraries Table
-    this.itinerariesTable = new Table(this, `${SERVICE_NAME}ItinerariesTable`, {
-      tableName: 'Itineraries',
-      partitionKey: { name: 'itineraryId', type: AttributeType.STRING },
-      billingMode: BillingMode.PAY_PER_REQUEST,
-    });
+    // this.itinerariesTable = new Table(this, `${SERVICE_NAME}ItinerariesTable`, {
+    //   tableName: 'Itineraries',
+    //   partitionKey: { name: 'userId_planId', type: AttributeType.STRING },
+    //   sortKey: { name: 'itineraryId', type: AttributeType.STRING },
+    //   billingMode: BillingMode.PAY_PER_REQUEST,
+    // });
 
     // this.itinerariesTable.grantReadWriteData(props.serviceRole);
-    this.exportValue(this.itinerariesTable.tableArn);
+    // this.exportValue(this.itinerariesTable.tableArn);
   }
 }
