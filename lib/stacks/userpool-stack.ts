@@ -41,8 +41,8 @@ export class UserPoolStack extends Stack {
       userPoolClientName: `${SERVICE_NAME}-user-pool-client`,
       // Enable OAuth settings for social sign-in
       oAuth: {
-        callbackUrls: ['https://d2v9cv67ztousb.cloudfront.net'], // Replace with your actual callback URL
-        logoutUrls: ['https://d2v9cv67ztousb.cloudfront.net'], // Replace with your actual logout URL
+        callbackUrls: ['https://d2v9cv67ztousb.cloudfront.net'],
+        logoutUrls: ['https://d2v9cv67ztousb.cloudfront.net'],
         flows: {
           authorizationCodeGrant: true,
         },
@@ -51,7 +51,6 @@ export class UserPoolStack extends Stack {
       supportedIdentityProviders: [UserPoolClientIdentityProvider.GOOGLE],
     });
 
-    // Associate the Google identity provider with the user pool client
     this.userPoolClient.node.addDependency(googleProvider);
   }
 }

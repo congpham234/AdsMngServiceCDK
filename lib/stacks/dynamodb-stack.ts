@@ -17,9 +17,10 @@ export class DynamodbStack extends Stack {
     super(scope, id, props);
 
     // Destinations Table
-    this.destinationsTable = new Table(this, `${SERVICE_NAME}DestinationsTable`, {
-      tableName: 'Destinations',
-      partitionKey: { name: 'destId', type: AttributeType.STRING },
+    this.destinationsTable = new Table(this, `${SERVICE_NAME}TravelPlans`, {
+      tableName: 'TravelPlans',
+      partitionKey: { name: 'userId', type: AttributeType.STRING },
+      sortKey: { name: 'planId', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
 
@@ -29,7 +30,8 @@ export class DynamodbStack extends Stack {
     // Itineraries Table
     this.itinerariesTable = new Table(this, `${SERVICE_NAME}ItinerariesTable`, {
       tableName: 'Itineraries',
-      partitionKey: { name: 'itineraryId', type: AttributeType.STRING },
+      partitionKey: { name: 'userId_planId', type: AttributeType.STRING },
+      sortKey: { name: 'itineraryId', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
     });
 
